@@ -112,11 +112,17 @@ let wagesEarnedOnDate = function(dateSought){
 // Using wagesEarnedOnDate, accumulate the value of all dates worked by the employee
 // in the record used as context. Amount should be returned as a number.
 
-function calculatePayroll(array) {
-  let expenses = array.reduce(function(memo, employee) {
-    return memo + allWagesFor.call(employee)
-  }, 0)
-  return expenses
+// function calculatePayroll(array) {
+//   let expenses = array.reduce(function(memo, employee) {
+//     return memo + allWagesFor.call(employee)
+//   }, 0)
+//   return expenses
+// }
+
+let calculatePayroll = function(arrayOfEmployeeRecords){
+    return arrayOfEmployeeRecords.reduce(function(memo, rec){
+        return memo + allWagesFor.call(rec)
+    }, 0)
 }
 
 
