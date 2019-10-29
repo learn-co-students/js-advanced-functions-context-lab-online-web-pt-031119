@@ -87,13 +87,20 @@ function hoursWorkedOnDate(date) {
   return lastTimeOut - lastTimeIn
 }
 
-function wagesEarnedOnDate(date) {
-  // let amountOwed = date.hoursWorkedOnDate()*2
-  // return hoursWorkedOnDate() * this.payPerHour
-  let amountOwed = hoursWorkedOnDate.call(this, date)*this.payPerHour
+// function wagesEarnedOnDate(date) {
+//   // let amountOwed = date.hoursWorkedOnDate()*2
+//   // return hoursWorkedOnDate() * this.payPerHour
+//   let amountOwed = hoursWorkedOnDate.call(this, date)*this.payPerHour
+//
+//
+//   return amountOwed
+// }
 
 
-  return amountOwed
+let wagesEarnedOnDate = function(dateSought){
+    let rawWage = hoursWorkedOnDate.call(this, dateSought)
+        * this.payPerHour
+    return parseFloat(rawWage.toString())
 }
 
 
