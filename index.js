@@ -22,11 +22,6 @@ let allWagesFor = function () {
 }
 
 
-//takes in an array containing four elements,
-//first name, last name, title, and pay per hour
-//Loads Array elements into corresponding Object properties.
-//Additionally, initialize empty Arrays on the properties
-//timeInEvents and timeOutEvents
 function createEmployeeRecord(array) {
   return {firstName: array[0],
     familyName: array[1],
@@ -39,33 +34,13 @@ function createEmployeeRecord(array) {
 
 
 
-//takes in an Array of Arrays
-//returns an array of objects
-//Converts each nested Array into an employee record using
-//createEmployeeRecord and accumulates it to a new Array
-
-// (employee) => {
-//   return xxxx
-// }
-
 function createEmployeeRecords(array) {
   return array.map(function(employee) {
     return createEmployeeRecord(employee)
   })
 }
 
-//Argument(s)
-// A date stamp ("YYYY-MM-DD HHMM"), where time is expressed in 24-hour standard
-// Returns
-// The record that was just updated
-// Behavior
-// Add an Object with keys:
-// type: Set to "TimeIn"
-// hour: Derived from the argument
-// date: Derived from the argument
 
-// const [title, firstName, lastName] = 'Sir Woody BarksALot'.split(' ')
-//use destructuring to create timeIn and dateStamp
 function createTimeInEvent(timeStamp) {
   // let dateStamp = timeStamp.split(' ')
 
@@ -86,16 +61,6 @@ function createTimeInEvent(timeStamp) {
 }
 
 
-// Argument(s)
-// A date stamp ("YYYY-MM-DD HHMM"), where time is expressed in 24-hour standard
-// Returns
-// The record that was just updated
-// Behavior
-// Add an Object with keys:
-// type: Set to "TimeOut"
-// hour: Derived from the argument
-// date: Derived from the argument
-
 function createTimeOutEvent(timeStamp) {
   let [dateStamp, timeOut] = timeStamp.split(' ')
   //
@@ -109,58 +74,57 @@ function createTimeOutEvent(timeStamp) {
 
    return this
 
-  // return this.timeOutEvents.push(timeOutCard)
 }
 
-// Argument(s)
-// A date of the form "YYYY-MM-DD"
-// Returns
-// Pay owed
-// Behavior
-// Using hoursWorkedOnDate, multiply the hours by the record's
-// payRate to determine amount owed. Amount should be returned as a number.
-
-function wagesEarnedOnDate(date) {
-  // let amountOwed = date.hoursWorkedOnDate()*2
-}
-
-// hoursWorkedOnDate
-// Argument(s)
-// A date of the form "YYYY-MM-DD"
-// Returns
-// Hours worked, an Integer
-// Behavior
-// Given a date, find the number of hours elapsed
-// between that date's timeInEvent and timeOutEvent
 
 function hoursWorkedOnDate(date) {
   //why are we passing in a date argument
-  let lastTimeIn = this.timeInEvents[-1]
-  let lastTimeOut = this.timeOutEvents[-1]
-
-  console.log(lastTimeIn)
-  console.log(lastTimeOut)
+  //create a filter so that the time in
+  //and time out will only happen if the date matches
+  let lastTimeIn = (this.timeInEvents[this.timeInEvents.length - 1].hour)/100
+  let lastTimeOut = (this.timeOutEvents[this.timeOutEvents.length - 1].hour)/100
 
   return lastTimeOut - lastTimeIn
 }
 
+function wagesEarnedOnDate(date) {
+  // let amountOwed = date.hoursWorkedOnDate()*2
+  // return hoursWorkedOnDate() * this.payPerHour
+  let amountOwed = hoursWorkedOnDate.call(this, date)*this.payPerHour
 
-//
-// allWagesFor
+
+  return amountOwed
+}
+
+
 // Argument(s)
-// None
+// Array of employee records
 // Returns
-// Sum of pay owed to all employees for all dates, as a number
+// Pay owed for all dates
 // Behavior
-// Using wagesEarnedOnDate, accumulate the value of
-// all dates worked by the employee in
-// the record used as context. Amount should be returned as a number.
-//  HINT: You will need to find the available dates somehow....
+// Using wagesEarnedOnDate, accumulate the value of all dates worked by the employee
+// in the record used as context. Amount should be returned as a number.
 
-function calculatePayroll() {
-
+function calculatePayroll(array) {
+  let expenses = array.reduce(function(memo, employee) {
+    return memo + allWagesFor.call(employee)
+  }, 0)
+  return expenses
 }
 
-function findEmployeeByFirstName() {
 
+function findEmployeeByFirstName(array, firstNameString) {
+  let matchingEmployees = array.filter(employee => employee.firstName === firstNameString)
+
+  return matchingEmployees[0]
 }
+
+// function payrollExpense(array) {
+//   let expenses = [];
+//
+//   array.forEach(function(employee, i) {
+//     expenses.push(allWagesFor.call(this, array[i]))
+//   })
+//   return expenses
+//   // console.log(expenses)
+// }
